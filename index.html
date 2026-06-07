@@ -8,47 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0c10;
-    --bg2: #0f1218;
-    --bg3: #161b24;
-    --bg4: #1e2535;
-    --panel: #12161f;
-    --border: #1f2a3a;
-    --border2: #2a3850;
-    --accent: #00d4ff;
-    --accent2: #7c3aed;
-    --accent3: #f59e0b;
-    --gold: #ffd700;
-    --green: #22c55e;
-    --red: #ef4444;
-    --orange: #f97316;
-    --text: #e2e8f0;
-    --text2: #94a3b8;
-    --text3: #475569;
-    --font-head: 'Rajdhani', sans-serif;
-    --font-body: 'Exo 2', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --bg: #0a0c10; --bg2: #0f1218; --bg3: #161b24; --bg4: #1e2535;
+    --panel: #12161f; --border: #1f2a3a; --border2: #2a3850;
+    --accent: #00d4ff; --accent2: #7c3aed; --accent3: #f59e0b;
+    --gold: #ffd700; --green: #22c55e; --red: #ef4444; --orange: #f97316;
+    --text: #e2e8f0; --text2: #94a3b8; --text3: #475569;
+    --font-head: 'Rajdhani', sans-serif; --font-body: 'Exo 2', sans-serif; --font-mono: 'JetBrains Mono', monospace;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
 
-  /* Noise texture overlay */
   body::before {
-    content:'';
-    position:fixed;
-    inset:0;
+    content:''; position:fixed; inset:0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none;
-    z-index:9999;
-    opacity:0.4;
+    pointer-events:none; z-index:9999; opacity:0.4;
   }
 
   ::-webkit-scrollbar { width:6px; }
@@ -56,230 +31,92 @@
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius:3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-  /* ===== HEADER ===== */
-  header {
-    position: sticky; top:0; z-index:100;
-    background: rgba(10,12,16,0.92);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-  }
-
-  .logo {
-    font-family: var(--font-head);
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .logo span {
-    background: linear-gradient(90deg, var(--accent2), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
+  /* HEADER */
+  header { position: sticky; top:0; z-index:100; background: rgba(10,12,16,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .logo span { background: linear-gradient(90deg, var(--accent2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   nav { display:flex; gap:0.25rem; }
-
-  nav button {
-    background: none; border: none; color: var(--text2);
-    font-family: var(--font-head); font-size: 0.85rem; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase; padding: 0.4rem 0.9rem;
-    cursor: pointer; border-radius: 4px; transition: all 0.2s; position: relative;
-  }
-
-  nav button::after {
-    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-    width:0; height:2px; background: var(--accent); transition: width 0.2s;
-  }
-
+  nav button { background: none; border: none; color: var(--text2); font-family: var(--font-head); font-size: 0.85rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 0.4rem 0.9rem; cursor: pointer; border-radius: 4px; transition: all 0.2s; position: relative; }
+  nav button::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:2px; background: var(--accent); transition: width 0.2s; }
   nav button:hover { color: var(--text); }
   nav button:hover::after, nav button.active::after { width:80%; }
   nav button.active { color: var(--accent); }
-
   .header-actions { display:flex; gap:0.5rem; align-items:center; }
-
-  .btn-add {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border: none; color: #fff; font-family: var(--font-head); font-size: 0.8rem;
-    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    padding: 0.45rem 1.1rem; border-radius: 4px; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 0 15px rgba(0,212,255,0.2);
-  }
-
+  .btn-add { background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #fff; font-family: var(--font-head); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.45rem 1.1rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
   .btn-add:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(0,212,255,0.4); }
 
-  /* ===== PAGES ===== */
+  /* PAGES & LAYOUT */
   .page { display:none; padding: 2rem; max-width: 1400px; margin: 0 auto; }
   .page.active { display:block; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(16px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-
-  /* ===== DASHBOARD ===== */
-  .dash-hero {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;
-  }
-
-  .stat-card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-    padding: 1.25rem 1.5rem; position: relative; overflow: hidden; transition: border-color 0.2s;
-  }
-
-  .stat-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-
+  .dash-hero { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; position: relative; overflow: hidden; transition: border-color 0.2s; }
+  .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
   .stat-card:hover { border-color: var(--border2); }
-
-  .stat-card .label {
-    font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3);
-    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;
-  }
-
-  .stat-card .value {
-    font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1;
-  }
-
+  .stat-card .label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .stat-card .value { font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; }
   .stat-card .sub { font-size: 0.75rem; color: var(--text3); margin-top: 0.3rem; }
-
-  .stat-card .icon {
-    position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 2.5rem; opacity: 0.06;
-  }
-
-  .dash-grid {
-    display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;
-  }
-
-  .section-title {
-    font-family: var(--font-head); font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 3px; text-transform: uppercase; color: var(--text3);
-    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;
-  }
-
+  .stat-card .icon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 2.5rem; opacity: 0.06; }
+  .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .section-title { font-family: var(--font-head); font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
   .section-title::after { content:''; flex:1; height:1px; background: var(--border); }
 
-  /* ===== GAME CARDS ===== */
+  /* GAME CARDS */
   .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; }
-
-  .game-card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-    overflow: hidden; cursor: pointer; transition: all 0.25s; position: relative;
-  }
-
+  .game-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.25s; position: relative; }
   .game-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 30px rgba(0,212,255,0.15); }
-
-  .game-card .cover {
-    width:100%; aspect-ratio: 16/9; background: var(--bg3); display: flex; align-items:center;
-    justify-content:center; font-size: 3rem; position: relative; overflow: hidden;
-  }
-
+  .game-card .cover { width:100%; aspect-ratio: 16/9; background: var(--bg3); display: flex; align-items:center; justify-content:center; font-size: 3rem; position: relative; overflow: hidden; }
   .game-card .cover img { width:100%; height:100%; object-fit:cover; transition: transform 0.3s; }
   .game-card:hover .cover img { transform: scale(1.05); }
-
-  .game-card .cover-fallback {
-    width:100%; height:100%; background: linear-gradient(135deg, var(--bg3), var(--bg4));
-    display:flex; align-items:center; justify-content:center; font-size:2.5rem;
-  }
-
+  .game-card .cover-fallback { width:100%; height:100%; background: linear-gradient(135deg, var(--bg3), var(--bg4)); display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
   .game-card .info { padding: 0.85rem; }
+  .game-card .title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .game-card .meta { display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text3); margin-bottom: 0.5rem; }
 
-  .game-card .title {
-    font-family: var(--font-head); font-size: 0.95rem; font-weight: 600; color: var(--text);
-    margin-bottom: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-
-  .game-card .meta {
-    display:flex; justify-content:space-between; align-items:center;
-    font-size: 0.75rem; color: var(--text3); margin-bottom: 0.5rem;
-  }
-
+  /* STARS DISPLAY & HALF STARS */
   .stars-display { display: flex; gap: 1px; align-items: center; }
-  .stars-display .star { color: var(--text3); font-size: 0.75rem; }
+  .stars-display .star { color: var(--text3); font-size: 0.8rem; position: relative; display: inline-block; }
   .stars-display .star.filled { color: var(--gold); }
+  .stars-display .star.half::after { content: '★'; color: var(--gold); position: absolute; left: 0; top: 0; width: 50%; overflow: hidden; }
 
   .completion-bar-wrap { position: relative; margin-top: 0.4rem; }
   .completion-bar-bg { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
   .completion-bar { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
   .completion-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text3); position: absolute; right:0; top:-14px; }
-
-  .badge-status {
-    position: absolute; top: 0.5rem; right: 0.5rem; font-family: var(--font-mono);
-    font-size: 0.55rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-    padding: 2px 6px; border-radius: 3px;
-  }
-
+  .badge-status { position: absolute; top: 0.5rem; right: 0.5rem; font-family: var(--font-mono); font-size: 0.55rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; }
   .badge-completed { background: rgba(34,197,94,0.2); color: var(--green); border:1px solid rgba(34,197,94,0.3); }
   .badge-playing { background: rgba(0,212,255,0.15); color: var(--accent); border:1px solid rgba(0,212,255,0.3); }
   .badge-dropped { background: rgba(239,68,68,0.15); color: var(--red); border:1px solid rgba(239,68,68,0.3); }
+  .progress-tag { font-family: var(--font-mono); font-size: 0.6rem; margin-left: 0.5rem; padding: 2px 5px; border-radius: 3px; background: var(--bg3); }
 
-  .progress-tag {
-    font-family: var(--font-mono); font-size: 0.6rem; margin-left: 0.5rem;
-    padding: 2px 5px; border-radius: 3px; background: var(--bg3);
-  }
-
-  /* ===== MODAL & FORMS ===== */
-  .modal-overlay {
-    display:none; position:fixed; inset:0; background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(8px); z-index: 500; align-items:center; justify-content:center;
-  }
-
+  /* MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 500; align-items:center; justify-content:center; }
   .modal-overlay.open { display:flex; animation: fadeIn 0.2s; }
   @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-  .modal {
-    background: var(--bg2); border: 1px solid var(--border2); border-radius: 12px;
-    width: 90%; max-width: 680px; max-height: 90vh; overflow-y: auto;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 60px rgba(0,212,255,0.05); animation: slideUp 0.3s ease;
-  }
-
+  .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: 12px; width: 90%; max-width: 680px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 60px rgba(0,212,255,0.05); animation: slideUp 0.3s ease; }
   @keyframes slideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-
-  .modal-header {
-    padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center;
-  }
-
-  .modal-title {
-    font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; letter-spacing: 2px;
-    text-transform: uppercase; background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-  }
-
+  .modal-header { padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .modal-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
   .modal-close { background:none; border:none; color: var(--text3); font-size: 1.4rem; cursor:pointer; line-height:1; }
   .modal-close:hover { color: var(--red); }
   .modal-body { padding: 1.5rem; }
 
+  /* FORMS & INPUTS */
   .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
   .form-col { display:flex; flex-direction:column; gap:0.4rem; }
-
   label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; }
-
-  input, select, textarea {
-    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
-    color: var(--text); font-family: var(--font-body); font-size: 0.9rem;
-    padding: 0.6rem 0.8rem; transition: border-color 0.2s; outline: none; width: 100%;
-  }
-
+  input[type=text], input[type=number], select, textarea { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--font-body); font-size: 0.9rem; padding: 0.6rem 0.8rem; transition: border-color 0.2s; outline: none; width: 100%; }
   input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,212,255,0.1); }
   textarea { resize:vertical; min-height:80px; }
 
-  .star-rating-input { display:flex; gap:4px; align-items:center; padding: 0.4rem 0; }
-  .star-btn { background:none; border:none; font-size: 1.4rem; cursor:pointer; color: var(--text3); padding: 0 1px; }
-  .star-btn.active { color: var(--gold); transform: scale(1.1); }
-  .star-btn:hover { color: var(--gold); }
-  .rating-val { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-left: 0.5rem; min-width: 30px; }
+  /* SLIDER */
+  input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; margin-top: -6px; box-shadow: 0 0 10px rgba(0,212,255,0.5); }
+  input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: var(--bg3); border-radius: 3px; border: 1px solid var(--border); }
+  input[type=range]:focus { outline: none; }
+  
+  .rating-val { font-family: var(--font-mono); font-size: 1.2rem; color: var(--gold); font-weight:600; min-width: 40px; text-align:center;}
 
   .form-actions { display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.5rem; padding-top:1rem; border-top: 1px solid var(--border); }
   .btn { font-family: var(--font-head); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.55rem 1.4rem; border-radius: 5px; border: none; cursor: pointer; transition: all 0.2s; }
@@ -290,13 +127,15 @@
   .btn-danger { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
   .btn-danger:hover { background: rgba(239,68,68,0.25); }
 
-  /* ===== OTHERS (Search, Lists, Responsive) ===== */
+  /* SEARCH RESULTS */
   .steam-result { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; display:flex; gap:1rem; align-items:flex-start; }
   .steam-result img { width:80px; border-radius:4px; flex-shrink:0; }
   .steam-result .sr-title { font-family: var(--font-head); font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
   .steam-result .sr-meta { font-size: 0.75rem; color: var(--text2); line-height: 1.6; }
   .steam-result .sr-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:0.4rem; }
   .tag { font-family: var(--font-mono); font-size: 0.6rem; padding: 2px 7px; border-radius: 3px; background: rgba(124,58,237,0.2); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
+
+  /* LISTS & STATS */
   .rank-list { display:flex; flex-direction:column; gap:0.75rem; }
   .rank-item { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.2rem; display:grid; grid-template-columns: 2.5rem 3rem 1fr auto auto; gap: 1rem; align-items:center; cursor:pointer; }
   .rank-item:hover { border-color: var(--border2); background: var(--bg3); }
@@ -310,6 +149,7 @@
   .rank-info .cat { font-size: 0.72rem; color: var(--text3); margin-top:2px; }
   .rank-score { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; color: var(--gold); text-align:center; min-width:50px; }
   .rank-hours { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); text-align:right; }
+  
   .stats-grid { display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; }
   .stats-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; }
   .stats-panel h3 { font-family: var(--font-head); font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; }
@@ -323,6 +163,7 @@
   .score-dist .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end; }
   .score-dist .bar-col .b { width:100%; background: linear-gradient(0deg, var(--accent2), var(--accent)); border-radius: 3px 3px 0 0; min-height:2px; }
   .score-dist .bar-col .bl { font-family: var(--font-mono); font-size: 0.55rem; color: var(--text3); }
+  
   .waitlist-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1rem; }
   .wait-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; overflow:hidden; transition: all 0.25s; cursor:pointer; }
   .wait-card:hover { border-color: var(--accent2); box-shadow: 0 6px 25px rgba(124,58,237,0.15); transform: translateY(-3px); }
@@ -339,6 +180,7 @@
   .btn-sm { font-family: var(--font-head); font-size: 0.65rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 4px; border: none; cursor: pointer; }
   .btn-sm-play { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
   .btn-sm-del { background: transparent; color: var(--text3); border: 1px solid var(--border); }
+  
   .detail-cover { width:100%; height:200px; background: var(--bg3); position:relative; overflow:hidden; border-radius:8px; margin-bottom:1.25rem; }
   .detail-cover img { width:100%; height:100%; object-fit:cover; }
   .detail-cover::after { content:''; position:absolute; inset:0; background: linear-gradient(0deg, var(--bg2) 0%, transparent 60%); }
@@ -346,6 +188,7 @@
   .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem; }
   .detail-item .di-label { font-family: var(--font-mono); font-size:0.6rem; color:var(--text3); text-transform:uppercase; letter-spacing:2px; margin-bottom:3px; }
   .detail-item .di-val { font-size:0.9rem; color:var(--text); }
+  
   .review-box { background: var(--bg3); border: 1px solid var(--border); border-radius:6px; padding:0.85rem 1rem; font-size:0.85rem; color:var(--text2); line-height:1.6; font-style:italic; margin-bottom:1rem; }
   .spinner { display:inline-block; width:16px; height:16px; border:2px solid var(--border2); border-top-color: var(--accent); border-radius:50%; animation: spin 0.6s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
@@ -354,24 +197,29 @@
   .empty-state .es-icon { font-size:4rem; margin-bottom:1rem; opacity:0.3; }
   .empty-state .es-title { font-family: var(--font-head); font-size:1.1rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color: var(--text2); margin-bottom:0.5rem; }
   .empty-state .es-sub { font-size:0.85rem; }
+  
   .activity-list { display:flex; flex-direction:column; gap:0.6rem; }
   .activity-item { display:flex; gap:0.75rem; align-items:center; padding: 0.6rem 0.75rem; background: var(--bg3); border-radius:6px; border: 1px solid var(--border); font-size:0.8rem; }
   .activity-item .ai-icon { font-size:1rem; flex-shrink:0; }
   .activity-item .ai-text { flex:1; color:var(--text2); }
   .activity-item .ai-text strong { color:var(--text); }
   .activity-item .ai-time { font-family: var(--font-mono); font-size:0.65rem; color: var(--text3); }
+  
   @media (max-width:900px) { .dash-hero { grid-template-columns:1fr 1fr; } .dash-grid, .stats-grid { grid-template-columns:1fr; } }
   @media (max-width:600px) { header { padding:0 1rem; } .page { padding: 1rem; } nav { display:none; } .games-grid { grid-template-columns:1fr 1fr; } }
+  
   .toast-container { position:fixed; bottom:1.5rem; right:1.5rem; z-index:1000; display:flex; flex-direction:column; gap:0.5rem; }
   .toast { background: var(--bg3); border: 1px solid var(--border2); border-radius:8px; padding:0.75rem 1.1rem; font-size:0.85rem; min-width:250px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); animation: toastIn 0.3s ease; display:flex; align-items:center; gap:0.6rem; }
   @keyframes toastIn { from{transform:translateX(50px);opacity:0} to{transform:translateX(0);opacity:1} }
   .toast.success { border-left:3px solid var(--green); }
   .toast.error { border-left:3px solid var(--red); }
   .toast.info { border-left:3px solid var(--accent); }
+  
   .filter-bar { display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap; align-items:center; }
   .filter-bar select, .filter-bar input { flex:1; min-width:140px; max-width:200px; font-size:0.8rem; padding:0.45rem 0.75rem; }
   .filter-bar .sort-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--text3); text-transform:uppercase; letter-spacing:2px; white-space:nowrap; }
   .highlight-box { background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(124,58,237,0.05)); border: 1px solid rgba(0,212,255,0.15); border-radius:8px; padding:1rem 1.25rem; margin-bottom:1rem; }
+  
   .page-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.75rem; }
   .page-header h1 { font-family: var(--font-head); font-size:1.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; background: linear-gradient(90deg, var(--text) 60%, var(--text2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
   .page-header .sub { font-size:0.8rem; color:var(--text3); font-family:var(--font-mono); margin-top:3px; }
@@ -506,73 +354,52 @@
       <div class="form-col" style="margin-bottom:1rem;">
         <label>Buscar na RAWG (Nome do Jogo)</label>
         <div style="display:flex;gap:0.5rem;">
-          <input type="text" id="steamSearch" placeholder="Ex: Elden Ring, Hollow Knight..." oninput="debounceSearch()" style="flex:1;">
+          <input type="text" id="steamSearch" placeholder="Ex: Elden Ring..." oninput="debounceSearch()" style="flex:1;">
         </div>
         <div id="steamSearchStatus"></div>
         <div id="steamResult"></div>
       </div>
 
       <div class="form-row">
-        <div class="form-col">
-          <label>Nome do Jogo *</label>
-          <input type="text" id="gName" placeholder="Nome do jogo">
-        </div>
-        <div class="form-col">
-          <label>Categoria / Gênero</label>
-          <input type="text" id="gCat" placeholder="Ex: RPG, FPS...">
-        </div>
+        <div class="form-col"><label>Nome do Jogo *</label><input type="text" id="gName"></div>
+        <div class="form-col"><label>Categoria / Gênero</label><input type="text" id="gCat"></div>
       </div>
 
       <div class="form-row">
-        <div class="form-col">
-          <label>Suas Horas Jogadas</label>
-          <input type="number" id="gHours" placeholder="0" min="0">
-        </div>
-        <div class="form-col">
-          <label>Média da Comunidade (h)</label>
-          <input type="number" id="gCommTime" placeholder="Preenchido via RAWG" min="0">
-        </div>
+        <div class="form-col"><label>Suas Horas Jogadas</label><input type="number" id="gHours" min="0"></div>
+        <div class="form-col"><label>Média da Comunidade (h)</label><input type="number" id="gCommTime" min="0"></div>
       </div>
 
       <div class="form-row">
         <div class="form-col">
           <label>Status</label>
-          <select id="gStatus">
-            <option value="completed">Concluído</option>
-            <option value="playing">Jogando</option>
-            <option value="dropped">Abandonado</option>
-          </select>
+          <select id="gStatus"><option value="completed">Concluído</option><option value="playing">Jogando</option><option value="dropped">Abandonado</option></select>
         </div>
-        <div class="form-col">
-          <label>% de Conclusão</label>
-          <input type="number" id="gCompletion" placeholder="0" min="0" max="100">
-        </div>
+        <div class="form-col"><label>% de Conclusão</label><input type="number" id="gCompletion" min="0" max="100"></div>
       </div>
 
       <div class="form-row">
-        <div class="form-col">
-          <label>Plataforma</label>
-          <input type="text" id="gPlatform" placeholder="Steam, PS5, Xbox...">
-        </div>
+        <div class="form-col"><label>Plataforma</label><input type="text" id="gPlatform"></div>
       </div>
 
-      <div class="form-col" style="margin-bottom:1rem;">
-        <label>Sua Nota (0–10 estrelas)</label>
-        <div class="star-rating-input" id="starInput">
-          <span id="ratingVal" class="rating-val">—</span>
+      <div class="form-col" style="margin-bottom:1rem; background:var(--bg3); padding:1rem; border-radius:6px; border:1px solid var(--border);">
+        <label style="margin-bottom:0.5rem;">Sua Nota (0.5 a 10)</label>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <input type="range" id="gScoreSlider" min="0" max="10" step="0.5" value="0" oninput="updateStarDisplay(this.value)">
+          <div id="ratingVal" class="rating-val">0.0</div>
         </div>
+        <div class="stars-display" id="starVisualPreview" style="margin-top:0.5rem; justify-content:center; font-size:1.5rem;"></div>
       </div>
 
       <div class="form-col" style="margin-bottom:1rem;">
         <label>Resenha / Comentário</label>
-        <textarea id="gReview" placeholder="O que você achou do jogo?"></textarea>
+        <textarea id="gReview" placeholder="O que achou do jogo?"></textarea>
       </div>
 
       <input type="hidden" id="gSteamId">
       <input type="hidden" id="gCover">
       <input type="hidden" id="gEditId">
-
-      <div class="form-actions">
+      <input type="hidden" id="gRawgRating"> <div class="form-actions">
         <button class="btn btn-danger" id="btnDelete" style="display:none;" onclick="deleteGame()">Excluir</button>
         <button class="btn btn-ghost" onclick="closeModal('addModal')">Cancelar</button>
         <button class="btn btn-primary" onclick="saveGame()">Salvar Jogo</button>
@@ -594,41 +421,19 @@
         <div id="wSteamStatus"></div>
         <div id="wSteamResult"></div>
       </div>
-
       <div class="form-row">
-        <div class="form-col">
-          <label>Nome do Jogo *</label>
-          <input type="text" id="wName">
-        </div>
-        <div class="form-col">
-          <label>Categoria</label>
-          <input type="text" id="wCat" placeholder="RPG, FPS...">
-        </div>
+        <div class="form-col"><label>Nome do Jogo *</label><input type="text" id="wName"></div>
+        <div class="form-col"><label>Categoria</label><input type="text" id="wCat"></div>
       </div>
-
       <div class="form-row">
-        <div class="form-col">
-          <label>Horas Estimadas</label>
-          <input type="number" id="wHours" placeholder="Ex: 30">
-        </div>
+        <div class="form-col"><label>Horas Estimadas</label><input type="number" id="wHours" placeholder="Ex: 30"></div>
         <div class="form-col">
           <label>Prioridade</label>
-          <select id="wPriority">
-            <option value="high">Alta 🔥</option>
-            <option value="med" selected>Média</option>
-            <option value="low">Baixa</option>
-          </select>
+          <select id="wPriority"><option value="high">Alta 🔥</option><option value="med" selected>Média</option><option value="low">Baixa</option></select>
         </div>
       </div>
-
-      <div class="form-col" style="margin-bottom:1rem;">
-        <label>Motivo do interesse</label>
-        <textarea id="wNote" placeholder="Por que quer jogar?"></textarea>
-      </div>
-
-      <input type="hidden" id="wCover">
-      <input type="hidden" id="wEditId">
-
+      <div class="form-col" style="margin-bottom:1rem;"><label>Motivo</label><textarea id="wNote"></textarea></div>
+      <input type="hidden" id="wCover"><input type="hidden" id="wEditId">
       <div class="form-actions">
         <button class="btn btn-danger" id="btnWaitDelete" style="display:none;" onclick="deleteWait()">Excluir</button>
         <button class="btn btn-ghost" onclick="closeModal('waitModal')">Cancelar</button>
@@ -693,43 +498,33 @@ function renderPage(id) {
   if (id === 'waitlist') renderWaitlist();
 }
 
-// =================== STAR RATING ===================
-function buildStars(container, currentVal, onSelect) {
-  container.innerHTML = '';
-  const valSpan = document.createElement('span');
-  valSpan.className = 'rating-val';
-  valSpan.id = container.id === 'starInput' ? 'ratingVal' : 'ratingValX';
-  valSpan.textContent = currentVal > 0 ? currentVal.toFixed(1) : '—';
-  container.appendChild(valSpan);
-
+// =================== STAR RATING HTML (NOVO) ===================
+// Agora gera metades de estrela usando a classe .half
+function starsHtml(score) {
+  if (!score || score === 0) return '<span style="color:var(--text3);font-size:0.75rem;">Sem nota</span>';
+  let html = '<div class="stars-display">';
   for (let i = 1; i <= 10; i++) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'star-btn' + (i <= currentVal ? ' active' : '');
-    btn.textContent = '★';
-    btn.dataset.val = i;
-    btn.addEventListener('mouseenter', () => highlight(container, i));
-    btn.addEventListener('mouseleave', () => highlight(container, currentRating));
-    btn.addEventListener('click', () => {
-      currentRating = i;
-      valSpan.textContent = i + '.0';
-      highlight(container, i);
-      if (onSelect) onSelect(i);
-    });
-    container.appendChild(btn);
+    if (score >= i) {
+      html += `<span class="star filled">★</span>`;
+    } else if (score >= i - 0.5) {
+      html += `<span class="star half">★</span>`;
+    } else {
+      html += `<span class="star">★</span>`;
+    }
   }
+  html += `</div>`;
+  return html;
 }
 
-function highlight(container, val) {
-  container.querySelectorAll('.star-btn').forEach((b, i) => {
-    b.classList.toggle('active', i < val);
-  });
+function updateStarDisplay(val) {
+  currentRating = parseFloat(val);
+  document.getElementById('ratingVal').textContent = currentRating.toFixed(1);
+  document.getElementById('starVisualPreview').innerHTML = starsHtml(currentRating);
 }
 
 // =================== RAWG SEARCH ===================
 async function searchRAWG(query, resultEl, statusEl, fillFn) {
   if (!query || query.length < 2) { resultEl.innerHTML = ''; statusEl.innerHTML = ''; return; }
-  
   statusEl.innerHTML = '<div class="searching-indicator"><div class="spinner"></div> Buscando na base RAWG...</div>';
   resultEl.innerHTML = '';
 
@@ -750,13 +545,16 @@ async function searchRAWG(query, resultEl, statusEl, fillFn) {
 
       const platforms = item.platforms ? item.platforms.map(p => p.platform.name).slice(0,3).join(', ') : '';
       const genres = item.genres ? item.genres.map(g => g.name).join(', ') : '';
+      
+      // Multiplica a nota da RAWG por 2 para ficar na base 10
+      const rawgBase10 = item.rating ? (item.rating * 2).toFixed(1) : null;
 
       div.innerHTML = `
         <img src="${item.background_image || ''}" alt="" onerror="this.style.display='none'">
         <div>
           <div class="sr-title">${item.name}</div>
           <div class="sr-meta">
-            ${item.rating ? `Nota RAWG: <strong style="color:var(--green)">${item.rating}</strong>/5` : 'Sem nota'}
+            ${rawgBase10 ? `Nota Comunidade (RAWG): <strong style="color:var(--gold)">${rawgBase10}</strong>/10` : 'Sem nota'}
             ${item.playtime ? ` · Média: ${item.playtime}h` : ''}
             ${platforms ? `<br>${platforms}` : ''}
           </div>
@@ -769,7 +567,7 @@ async function searchRAWG(query, resultEl, statusEl, fillFn) {
     });
   } catch (e) {
     statusEl.innerHTML = '';
-    resultEl.innerHTML = '<div style="font-size:0.75rem;color:var(--red);padding:0.3rem 0;">Falha de comunicação com a RAWG API.</div>';
+    resultEl.innerHTML = '<div style="font-size:0.75rem;color:var(--red);padding:0.3rem 0;">Falha de comunicação com a API.</div>';
   }
 }
 
@@ -796,6 +594,7 @@ function fillGameFromRAWG(item) {
   document.getElementById('gCat').value = item.genres ? item.genres.map(g => g.name).join(', ') : '';
   document.getElementById('gPlatform').value = item.platforms ? item.platforms.map(p => p.platform.name).slice(0,2).join(', ') : '';
   document.getElementById('gCommTime').value = item.playtime || '';
+  document.getElementById('gRawgRating').value = item.rating ? (item.rating * 2).toFixed(1) : '';
 
   document.getElementById('steamResult').innerHTML = `<div style="font-size:0.75rem;color:var(--green);padding:0.3rem 0;">✓ ${item.name} selecionado!</div>`;
   document.getElementById('steamSearch').value = '';
@@ -806,11 +605,7 @@ function fillWaitFromRAWG(item) {
   document.getElementById('wName').value = item.name;
   document.getElementById('wCover').value = item.background_image || '';
   document.getElementById('wCat').value = item.genres ? item.genres.map(g => g.name).join(', ') : '';
-  
-  if (item.playtime && !document.getElementById('wHours').value) {
-    document.getElementById('wHours').value = item.playtime;
-  }
-
+  if (item.playtime && !document.getElementById('wHours').value) document.getElementById('wHours').value = item.playtime;
   document.getElementById('wSteamResult').innerHTML = `<div style="font-size:0.75rem;color:var(--green);padding:0.3rem 0;">✓ ${item.name} selecionado!</div>`;
   document.getElementById('wSteamSearch').value = '';
   toast('Dados da RAWG carregados!', 'success');
@@ -818,27 +613,10 @@ function fillWaitFromRAWG(item) {
 
 // =================== HELPERS ===================
 function completionColor(pct) {
-  if (pct >= 100) return '#ffd700';
-  if (pct >= 75) return '#22c55e';
-  if (pct >= 40) return '#00d4ff';
-  if (pct >= 10) return '#f97316';
-  return '#ef4444';
+  if (pct >= 100) return '#ffd700'; if (pct >= 75) return '#22c55e'; if (pct >= 40) return '#00d4ff'; if (pct >= 10) return '#f97316'; return '#ef4444';
 }
-
-function starsHtml(score) {
-  if (!score) return '<span style="color:var(--text3);font-size:0.75rem;">Sem nota</span>';
-  let html = '<div class="stars-display">';
-  for (let i = 1; i <= 10; i++) {
-    const cl = i <= score ? 'filled' : '';
-    html += `<span class="star ${cl}">★</span>`;
-  }
-  html += `</div>`;
-  return html;
-}
-
 function getSafeDate(dateStr) {
-  const d = new Date(dateStr);
-  return isNaN(d.getTime()) ? 0 : d.getTime();
+  const d = new Date(dateStr); return isNaN(d.getTime()) ? 0 : d.getTime();
 }
 
 // =================== MODAL CONTROL ===================
@@ -859,14 +637,18 @@ function openAddModal(gameId) {
     document.getElementById('gReview').value = g.review || '';
     document.getElementById('gCover').value = g.cover || '';
     document.getElementById('gSteamId').value = g.steamId || '';
-    currentRating = g.score || 0;
+    document.getElementById('gRawgRating').value = g.rawgRating || '';
+    
+    document.getElementById('gScoreSlider').value = g.score || 0;
+    updateStarDisplay(g.score || 0);
+    
     document.getElementById('btnDelete').style.display = 'inline-flex';
   } else {
     document.getElementById('addModalTitle').textContent = 'Adicionar Jogo';
     document.getElementById('btnDelete').style.display = 'none';
-    currentRating = 0;
+    document.getElementById('gScoreSlider').value = 0;
+    updateStarDisplay(0);
   }
-  buildStars(document.getElementById('starInput'), currentRating);
   document.getElementById('addModal').classList.add('open');
 }
 
@@ -894,14 +676,13 @@ function openAddWaitModal(wId) {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function resetAddForm() {
-  ['gName','gCat','gHours','gCommTime','gCompletion','gPlatform','gReview','gCover','gSteamId','gEditId','steamSearch'].forEach(i => {
+  ['gName','gCat','gHours','gCommTime','gCompletion','gPlatform','gReview','gCover','gSteamId','gEditId','gRawgRating','steamSearch'].forEach(i => {
     const el = document.getElementById(i);
     if (el) el.value = '';
   });
   document.getElementById('gStatus').value = 'completed';
   document.getElementById('steamResult').innerHTML = '';
   document.getElementById('steamSearchStatus').innerHTML = '';
-  currentRating = 0;
 }
 
 function resetWaitForm() {
@@ -930,6 +711,7 @@ function saveGame() {
     status: document.getElementById('gStatus').value,
     platform: document.getElementById('gPlatform').value.trim(),
     score: currentRating,
+    rawgRating: parseFloat(document.getElementById('gRawgRating').value) || 0,
     review: document.getElementById('gReview').value.trim(),
     cover: document.getElementById('gCover').value.trim(),
     steamId: document.getElementById('gSteamId').value.trim(),
@@ -947,9 +729,7 @@ function saveGame() {
     toast('Jogo adicionado!', 'success');
   }
 
-  save();
-  closeModal('addModal');
-  updateCatFilters();
+  save(); closeModal('addModal'); updateCatFilters();
   renderPage(document.querySelector('nav button.active')?.textContent?.toLowerCase() || 'dashboard');
 }
 
@@ -960,53 +740,35 @@ function deleteGame() {
   if (!confirm(`Remover "${g.name}"?`)) return;
   games = games.filter(x => x.id !== id);
   addActivity('🗑️', `Removeu <strong>${g.name}</strong>`);
-  save();
-  toast('Jogo removido.', 'info');
-  closeModal('addModal');
+  save(); toast('Jogo removido.', 'info'); closeModal('addModal');
   renderPage(document.querySelector('nav button.active')?.textContent?.toLowerCase() || 'dashboard');
 }
 
 function saveWait() {
   const name = document.getElementById('wName').value.trim();
   if (!name) { toast('Nome é obrigatório!', 'error'); return; }
-
   const editId = document.getElementById('wEditId').value;
   const w = {
-    id: editId || Date.now().toString(),
-    name,
-    category: document.getElementById('wCat').value.trim(),
-    hours: parseFloat(document.getElementById('wHours').value) || 0,
-    priority: document.getElementById('wPriority').value,
-    note: document.getElementById('wNote').value.trim(),
-    cover: document.getElementById('wCover').value.trim(),
+    id: editId || Date.now().toString(), name, category: document.getElementById('wCat').value.trim(),
+    hours: parseFloat(document.getElementById('wHours').value) || 0, priority: document.getElementById('wPriority').value,
+    note: document.getElementById('wNote').value.trim(), cover: document.getElementById('wCover').value.trim(),
     date: editId ? (waitlist.find(x=>x.id===editId)?.date || new Date().toISOString()) : new Date().toISOString()
   };
 
   if (editId) {
-    const idx = waitlist.findIndex(x => x.id === editId);
-    waitlist[idx] = w;
-    toast('Atualizado!', 'success');
+    const idx = waitlist.findIndex(x => x.id === editId); waitlist[idx] = w; toast('Atualizado!', 'success');
   } else {
-    waitlist.unshift(w);
-    addActivity('📋', `Adicionou <strong>${name}</strong> à lista de espera`);
-    toast('Adicionado à lista de espera!', 'success');
+    waitlist.unshift(w); addActivity('📋', `Adicionou <strong>${name}</strong> à lista de espera`); toast('Adicionado à lista de espera!', 'success');
   }
-
-  save();
-  closeModal('waitModal');
-  renderWaitlist();
+  save(); closeModal('waitModal'); renderWaitlist();
 }
 
 function deleteWait() {
-  const id = document.getElementById('wEditId').value;
-  const w = waitlist.find(x => x.id === id);
+  const id = document.getElementById('wEditId').value; const w = waitlist.find(x => x.id === id);
   if (!w) return;
   if (!confirm(`Remover "${w.name}" da lista?`)) return;
   waitlist = waitlist.filter(x => x.id !== id);
-  save();
-  toast('Removido da lista.', 'info');
-  closeModal('waitModal');
-  renderWaitlist();
+  save(); toast('Removido da lista.', 'info'); closeModal('waitModal'); renderWaitlist();
 }
 
 function moveToPlayed(wId) {
@@ -1016,14 +778,12 @@ function moveToPlayed(wId) {
   document.getElementById('gName').value = w.name;
   document.getElementById('gCat').value = w.category || '';
   document.getElementById('gCover').value = w.cover || '';
-  currentRating = 0;
-  buildStars(document.getElementById('starInput'), 0);
+  document.getElementById('gScoreSlider').value = 0;
+  updateStarDisplay(0);
   document.getElementById('addModalTitle').textContent = 'Registrar Jogo Jogado';
   document.getElementById('btnDelete').style.display = 'none';
   waitlist = waitlist.filter(x => x.id !== wId);
-  save();
-  closeModal('waitModal');
-  document.getElementById('addModal').classList.add('open');
+  save(); closeModal('waitModal'); document.getElementById('addModal').classList.add('open');
   toast('Mova para jogados! Preencha os detalhes.', 'info');
 }
 
@@ -1036,30 +796,10 @@ function renderDashboard() {
   const waitHours = waitlist.reduce((s, w) => s + (w.hours || 0), 0);
 
   document.getElementById('dashStats').innerHTML = `
-    <div class="stat-card">
-      <div class="label">Jogos registrados</div>
-      <div class="value">${games.length}</div>
-      <div class="sub">${completed} concluídos</div>
-      <div class="icon">🎮</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Horas jogadas</div>
-      <div class="value">${totalHours.toFixed(0)}</div>
-      <div class="sub">${(totalHours / 24).toFixed(1)} dias de jogo</div>
-      <div class="icon">⏱️</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Nota média</div>
-      <div class="value" style="color:var(--gold)">${avgScore}</div>
-      <div class="sub">de 10 estrelas</div>
-      <div class="icon">⭐</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Lista de espera</div>
-      <div class="value" style="color:var(--accent2)">${waitlist.length}</div>
-      <div class="sub">~${waitHours}h estimadas</div>
-      <div class="icon">📋</div>
-    </div>
+    <div class="stat-card"><div class="label">Jogos registrados</div><div class="value">${games.length}</div><div class="sub">${completed} concluídos</div><div class="icon">🎮</div></div>
+    <div class="stat-card"><div class="label">Horas jogadas</div><div class="value">${totalHours.toFixed(0)}</div><div class="sub">${(totalHours / 24).toFixed(1)} dias de jogo</div><div class="icon">⏱️</div></div>
+    <div class="stat-card"><div class="label">Nota média</div><div class="value" style="color:var(--gold)">${avgScore}</div><div class="sub">de 10 estrelas</div><div class="icon">⭐</div></div>
+    <div class="stat-card"><div class="label">Lista de espera</div><div class="value" style="color:var(--accent2)">${waitlist.length}</div><div class="sub">~${waitHours}h estimadas</div><div class="icon">📋</div></div>
   `;
 
   const catMap = {};
@@ -1071,9 +811,7 @@ function renderDashboard() {
     catMap[c].count++;
   });
 
-  let topHourCat = { name: '—', hours: 0 };
-  let topScoreCat = { name: '—', avg: 0 };
-
+  let topHourCat = { name: '—', hours: 0 }; let topScoreCat = { name: '—', avg: 0 };
   for (const [cat, data] of Object.entries(catMap)) {
     if (data.hours > topHourCat.hours) topHourCat = { name: cat, hours: data.hours };
     if (data.scores.length > 0) {
@@ -1083,38 +821,18 @@ function renderDashboard() {
   }
 
   document.getElementById('dashHighlights').innerHTML = `
-    <div class="stat-card" style="border-color: var(--accent2);">
-      <div class="label">Categoria Mais Jogada</div>
-      <div class="value" style="color:var(--text)">${topHourCat.name}</div>
-      <div class="sub">${topHourCat.hours.toFixed(0)} horas totais na categoria</div>
-      <div class="icon">⏱️</div>
-    </div>
-    <div class="stat-card" style="border-color: var(--gold);">
-      <div class="label">Melhor Média de Nota</div>
-      <div class="value" style="color:var(--text)">${topScoreCat.name}</div>
-      <div class="sub">${topScoreCat.avg} de 10 estrelas</div>
-      <div class="icon">🏆</div>
-    </div>
+    <div class="stat-card" style="border-color: var(--accent2);"><div class="label">Categoria Mais Jogada</div><div class="value" style="color:var(--text)">${topHourCat.name}</div><div class="sub">${topHourCat.hours.toFixed(0)} horas totais na categoria</div><div class="icon">⏱️</div></div>
+    <div class="stat-card" style="border-color: var(--gold);"><div class="label">Melhor Média de Nota</div><div class="value" style="color:var(--text)">${topScoreCat.name}</div><div class="sub">${topScoreCat.avg} de 10 estrelas</div><div class="icon">🏆</div></div>
   `;
 
-  // Safely sort by date (avoiding NaN if date is missing in old saves)
   const recent = [...games].sort((a,b) => getSafeDate(b.date) - getSafeDate(a.date)).slice(0, 6);
   const rg = document.getElementById('dashRecentGames');
-  if (!recent.length) {
-    rg.innerHTML = '<div class="empty-state"><div class="es-icon">🎮</div><div class="es-title">Nenhum jogo ainda</div><div class="es-sub">Clique em "+ Adicionar Jogo" para começar</div></div>';
-  } else {
-    rg.innerHTML = recent.map(g => gameCardHtml(g)).join('');
-  }
+  if (!recent.length) rg.innerHTML = '<div class="empty-state"><div class="es-icon">🎮</div><div class="es-title">Nenhum jogo ainda</div><div class="es-sub">Clique em "+ Adicionar Jogo" para começar</div></div>';
+  else rg.innerHTML = recent.map(g => gameCardHtml(g)).join('');
 
   const act = document.getElementById('dashActivity');
-  if (!activity.length) {
-    act.innerHTML = '<div style="color:var(--text3);font-size:0.8rem;padding:1rem 0;">Nenhuma atividade ainda.</div>';
-  } else {
-    act.innerHTML = activity.slice(0, 8).map(a => {
-      const rel = timeAgo(new Date(a.time));
-      return `<div class="activity-item"><span class="ai-icon">${a.icon}</span><span class="ai-text">${a.text}</span><span class="ai-time">${rel}</span></div>`;
-    }).join('');
-  }
+  if (!activity.length) act.innerHTML = '<div style="color:var(--text3);font-size:0.8rem;padding:1rem 0;">Nenhuma atividade ainda.</div>';
+  else act.innerHTML = activity.slice(0, 8).map(a => `<div class="activity-item"><span class="ai-icon">${a.icon}</span><span class="ai-text">${a.text}</span><span class="ai-time">${timeAgo(new Date(a.time))}</span></div>`).join('');
 }
 
 function timeAgo(date) {
@@ -1143,25 +861,16 @@ function gameCardHtml(g) {
   return `
   <div class="game-card" onclick="showDetail('${g.id}')">
     <div class="cover">
-      ${g.cover
-        ? `<img src="${g.cover}" alt="${g.name}" onerror="this.parentElement.innerHTML='<div class=cover-fallback>🎮</div>'">`
-        : `<div class="cover-fallback">🎮</div>`}
+      ${g.cover ? `<img src="${g.cover}" alt="${g.name}" onerror="this.parentElement.innerHTML='<div class=cover-fallback>🎮</div>'">` : `<div class="cover-fallback">🎮</div>`}
       <span class="badge-status ${statusClass}">${statusLabel}</span>
     </div>
     <div class="info">
       <div class="title" title="${g.name}">${g.name}</div>
-      <div class="meta">
-        <span>${g.category || '—'}</span>
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text3); display:flex; align-items:center;">
-          ${g.hours || 0}h ${speedHtml}
-        </span>
-      </div>
+      <div class="meta"><span>${g.category || '—'}</span><span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text3); display:flex; align-items:center;">${g.hours || 0}h ${speedHtml}</span></div>
       ${starsHtml(g.score)}
       <div class="completion-bar-wrap">
         <span class="completion-label">${g.completion || 0}%</span>
-        <div class="completion-bar-bg">
-          <div class="completion-bar" style="width:${g.completion || 0}%;background:${color}"></div>
-        </div>
+        <div class="completion-bar-bg"><div class="completion-bar" style="width:${g.completion || 0}%;background:${color}"></div></div>
       </div>
     </div>
   </div>`;
@@ -1169,79 +878,51 @@ function gameCardHtml(g) {
 
 // =================== RENDER GAMES / RANKING / STATS / WAITLIST ===================
 function renderGames() {
-  const status = document.getElementById('filterStatus').value;
-  const cat = document.getElementById('filterCat').value;
-  const search = document.getElementById('filterSearch').value.toLowerCase();
-  const sort = document.getElementById('sortGames').value;
+  const status = document.getElementById('filterStatus').value; const cat = document.getElementById('filterCat').value;
+  const search = document.getElementById('filterSearch').value.toLowerCase(); const sort = document.getElementById('sortGames').value;
 
-  let list = games.filter(g =>
-    (!status || g.status === status) &&
-    (!cat || g.category === cat) &&
-    (!(search) || (g.name || '').toLowerCase().includes(search))
-  );
+  let list = games.filter(g => (!status || g.status === status) && (!cat || g.category === cat) && (!(search) || (g.name || '').toLowerCase().includes(search)));
 
-  if (sort === 'score') list.sort((a,b) => (b.score||0)-(a.score||0));
-  else if (sort === 'hours') list.sort((a,b) => (b.hours||0)-(a.hours||0));
-  else if (sort === 'completion') list.sort((a,b) => (b.completion||0)-(a.completion||0));
-  else if (sort === 'name') list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+  if (sort === 'score') list.sort((a,b) => (b.score||0)-(a.score||0)); else if (sort === 'hours') list.sort((a,b) => (b.hours||0)-(a.hours||0));
+  else if (sort === 'completion') list.sort((a,b) => (b.completion||0)-(a.completion||0)); else if (sort === 'name') list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
   else list.sort((a,b) => getSafeDate(b.date) - getSafeDate(a.date));
 
   document.getElementById('gamesCount').textContent = `${list.length} jogo${list.length!==1?'s':''} encontrado${list.length!==1?'s':''}`;
   const grid = document.getElementById('gamesGrid');
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🔍</div><div class="es-title">Nenhum jogo encontrado</div><div class="es-sub">Tente ajustar os filtros ou adicione novos jogos</div></div>';
-    return;
-  }
-  grid.innerHTML = list.map(g => gameCardHtml(g)).join('');
+  if (!list.length) grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🔍</div><div class="es-title">Nenhum jogo encontrado</div><div class="es-sub">Tente ajustar os filtros ou adicione novos jogos</div></div>';
+  else grid.innerHTML = list.map(g => gameCardHtml(g)).join('');
 }
 
 function renderRanking() {
   const catFilter = document.getElementById('rankFilter').value;
   let list = games.filter(g => g.score > 0 && (!catFilter || g.category === catFilter));
   list.sort((a,b) => b.score - a.score || (b.hours||0) - (a.hours||0));
-
   const el = document.getElementById('rankList');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="es-icon">🏆</div><div class="es-title">Sem jogos com nota</div><div class="es-sub">Adicione notas aos seus jogos para ver o ranking</div></div>';
-    return;
-  }
-
-  el.innerHTML = list.map((g, i) => {
-    const rank = i + 1;
-    const cls = rank === 1 ? 'top-1' : rank === 2 ? 'top-2' : rank === 3 ? 'top-3' : '';
-    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-    return `
-    <div class="rank-item ${cls}" onclick="showDetail('${g.id}')">
-      <div class="rank-num">${medal}</div>
-      <div class="rank-cover">${g.cover ? `<img src="${g.cover}" alt="" onerror="this.style.display='none'">` : ''}</div>
-      <div class="rank-info"><div class="name">${g.name}</div><div class="cat">${g.category || '—'} · ${g.platform || '—'}</div></div>
-      <div class="rank-score">${g.score}<span style="font-size:0.75rem;color:var(--text3)">/10</span></div>
-      <div class="rank-hours">${g.hours || 0}h<br><span style="font-size:0.6rem;color:var(--text3)">${g.completion || 0}%</span></div>
-    </div>`;
+  if (!list.length) el.innerHTML = '<div class="empty-state"><div class="es-icon">🏆</div><div class="es-title">Sem jogos com nota</div><div class="es-sub">Adicione notas aos seus jogos para ver o ranking</div></div>';
+  else el.innerHTML = list.map((g, i) => {
+    const cls = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1;
+    return `<div class="rank-item ${cls}" onclick="showDetail('${g.id}')"><div class="rank-num">${medal}</div><div class="rank-cover">${g.cover ? `<img src="${g.cover}" alt="" onerror="this.style.display='none'">` : ''}</div><div class="rank-info"><div class="name">${g.name}</div><div class="cat">${g.category || '—'} · ${g.platform || '—'}</div></div><div class="rank-score">${g.score}<span style="font-size:0.75rem;color:var(--text3)">/10</span></div><div class="rank-hours">${g.hours || 0}h<br><span style="font-size:0.6rem;color:var(--text3)">${g.completion || 0}%</span></div></div>`;
   }).join('');
 }
 
 function renderStats() {
-  if (!games.length) {
-    document.getElementById('statsGrid').innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">📊</div><div class="es-title">Sem dados ainda</div><div class="es-sub">Adicione jogos para ver estatísticas</div></div>';
-    return;
-  }
+  if (!games.length) { document.getElementById('statsGrid').innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">📊</div><div class="es-title">Sem dados ainda</div><div class="es-sub">Adicione jogos para ver estatísticas</div></div>'; return; }
 
   const catMap = {};
   games.forEach(g => {
-    const c = g.category || 'Sem categoria';
-    if (!catMap[c]) catMap[c] = { count:0, hours:0, scores:[], completion:[] };
-    catMap[c].count++;
-    catMap[c].hours += g.hours || 0;
-    if (g.score > 0) catMap[c].scores.push(g.score);
-    if (g.completion > 0) catMap[c].completion.push(g.completion);
+    const c = g.category || 'Sem categoria'; if (!catMap[c]) catMap[c] = { count:0, hours:0, scores:[], completion:[] };
+    catMap[c].count++; catMap[c].hours += g.hours || 0; if (g.score > 0) catMap[c].scores.push(g.score); if (g.completion > 0) catMap[c].completion.push(g.completion);
   });
-
   const cats = Object.entries(catMap).sort((a,b) => b[1].count - a[1].count);
-  const maxCount = Math.max(...cats.map(c => c[1].count));
-  const maxHours = Math.max(...cats.map(c => c[1].hours));
+  const maxCount = Math.max(...cats.map(c => c[1].count)); const maxHours = Math.max(...cats.map(c => c[1].hours));
+  
+  // Score dist for 20 buckets (0.5 to 10) is too tight, let's group them by full integers for the chart
   const scoreDist = Array(10).fill(0);
-  games.filter(g => g.score > 0).forEach(g => scoreDist[g.score-1]++);
+  games.filter(g => g.score > 0).forEach(g => {
+      const bucket = Math.ceil(g.score) - 1; 
+      if(bucket >= 0 && bucket < 10) scoreDist[bucket]++; 
+  });
   const maxD = Math.max(...scoreDist, 1);
   const statusCount = { completed:0, playing:0, dropped:0 };
   games.forEach(g => { if (statusCount[g.status] !== undefined) statusCount[g.status]++; });
@@ -1252,131 +933,76 @@ function renderStats() {
   const mostPlayed = [...games].sort((a,b) => (b.hours||0)-(a.hours||0))[0];
 
   document.getElementById('statsGrid').innerHTML = `
-    <div class="stats-panel">
-      <h3>Distribuição de Notas</h3>
-      <div class="chart-area"><div class="score-dist">${scoreDist.map((v,i) => `<div class="bar-col"><div class="b" style="height:${(v/maxD)*100}%"></div><div class="bl">${i+1}</div></div>`).join('')}</div></div>
-    </div>
+    <div class="stats-panel"><h3>Distribuição de Notas</h3><div class="chart-area"><div class="score-dist">${scoreDist.map((v,i) => `<div class="bar-col"><div class="b" style="height:${(v/maxD)*100}%"></div><div class="bl">${i+1}</div></div>`).join('')}</div></div></div>
     <div class="stats-panel">
       <h3>Status dos Jogos</h3>
       <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:0.5rem;">
-        ${[['completed','Concluídos','var(--green)'],['playing','Jogando','var(--accent)'],['dropped','Abandonados','var(--red)']].map(([k,l,c]) => `
-          <div class="cat-bar-item"><div class="cat-name" style="color:${c}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${games.length?statusCount[k]/games.length*100:0}%;background:${c}"></div></div><div class="bar-val">${statusCount[k]}</div></div>`).join('')}
-        <div style="margin-top:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-          <div><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:2px;">TOTAL HORAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent)">${totalHours.toFixed(0)}h</div></div>
-          <div><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:2px;">% MÉDIO</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent)">${avgCompletion}%</div></div>
-        </div>
+        ${[['completed','Concluídos','var(--green)'],['playing','Jogando','var(--accent)'],['dropped','Abandonados','var(--red)']].map(([k,l,c]) => `<div class="cat-bar-item"><div class="cat-name" style="color:${c}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${games.length?statusCount[k]/games.length*100:0}%;background:${c}"></div></div><div class="bar-val">${statusCount[k]}</div></div>`).join('')}
+        <div style="margin-top:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;"><div><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:2px;">TOTAL HORAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent)">${totalHours.toFixed(0)}h</div></div><div><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:2px;">% MÉDIO</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent)">${avgCompletion}%</div></div></div>
       </div>
     </div>
-    <div class="stats-panel"><h3>Categorias Preferidas (por jogos)</h3>${cats.slice(0,6).map(([c,d]) => `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${(d.count/maxCount)*100}%"></div></div><div class="bar-val">${d.count}</div></div>`).join('')}</div>
+    <div class="stats-panel"><h3>Categorias (por jogos)</h3>${cats.slice(0,6).map(([c,d]) => `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${(d.count/maxCount)*100}%"></div></div><div class="bar-val">${d.count}</div></div>`).join('')}</div>
     <div class="stats-panel"><h3>Horas por Categoria</h3>${cats.slice(0,6).map(([c,d]) => `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${maxHours?((d.hours/maxHours)*100):0}%;background:linear-gradient(90deg,var(--accent3),var(--orange))"></div></div><div class="bar-val">${d.hours.toFixed(0)}h</div></div>`).join('')}</div>
-    <div class="stats-panel">
-      <h3>Nota Média por Categoria</h3>
-      ${cats.filter(([,d]) => d.scores.length).slice(0,8).map(([c,d]) => {
-        const avg = d.scores.reduce((a,b)=>a+b,0)/d.scores.length;
-        return `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${avg/10*100}%;background:linear-gradient(90deg,var(--accent2),var(--gold))"></div></div><div class="bar-val" style="color:var(--gold)">${avg.toFixed(1)}</div></div>`;
-      }).join('')}
-    </div>
+    <div class="stats-panel"><h3>Nota Média por Categoria</h3>${cats.filter(([,d]) => d.scores.length).slice(0,8).map(([c,d]) => { const avg = d.scores.reduce((a,b)=>a+b,0)/d.scores.length; return `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${avg/10*100}%;background:linear-gradient(90deg,var(--accent2),var(--gold))"></div></div><div class="bar-val" style="color:var(--gold)">${avg.toFixed(1)}</div></div>`; }).join('')}</div>
     <div class="stats-panel">
       <h3>Destaques</h3>
       <div style="display:flex;flex-direction:column;gap:0.75rem;">
         ${topGame ? `<div class="highlight-box"><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:4px;">MELHOR AVALIADO</div><div style="font-family:var(--font-head);font-size:1rem;font-weight:600;">${topGame.name}</div><div style="font-size:0.75rem;color:var(--gold);">★ ${topGame.score}/10</div></div>` : ''}
         ${mostPlayed ? `<div class="highlight-box"><div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);margin-bottom:4px;">MAIS JOGADO</div><div style="font-family:var(--font-head);font-size:1rem;font-weight:600;">${mostPlayed.name}</div><div style="font-size:0.75rem;color:var(--accent);">⏱ ${mostPlayed.hours}h jogadas</div></div>` : ''}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-          <div style="background:var(--bg3);border-radius:6px;padding:0.6rem;border:1px solid var(--border);text-align:center;"><div style="font-family:var(--font-mono);font-size:0.55rem;color:var(--text3);">TOTAL DIAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--orange)">${(totalHours/24).toFixed(1)}</div></div>
-          <div style="background:var(--bg3);border-radius:6px;padding:0.6rem;border:1px solid var(--border);text-align:center;"><div style="font-family:var(--font-mono);font-size:0.55rem;color:var(--text3);">CATEGORIAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent2)">${cats.length}</div></div>
-        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;"><div style="background:var(--bg3);border-radius:6px;padding:0.6rem;border:1px solid var(--border);text-align:center;"><div style="font-family:var(--font-mono);font-size:0.55rem;color:var(--text3);">TOTAL DIAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--orange)">${(totalHours/24).toFixed(1)}</div></div><div style="background:var(--bg3);border-radius:6px;padding:0.6rem;border:1px solid var(--border);text-align:center;"><div style="font-family:var(--font-mono);font-size:0.55rem;color:var(--text3);">CATEGORIAS</div><div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent2)">${cats.length}</div></div></div>
       </div>
     </div>
   `;
 }
 
 function renderWaitlist() {
-  const pri = document.getElementById('waitPriFilter').value;
-  const cat = document.getElementById('waitCatFilter').value;
-  const search = document.getElementById('waitSearch').value.toLowerCase();
-
+  const pri = document.getElementById('waitPriFilter').value; const cat = document.getElementById('waitCatFilter').value; const search = document.getElementById('waitSearch').value.toLowerCase();
   let list = waitlist.filter(w => (!pri || w.priority === pri) && (!cat || w.category === cat) && (!(search) || (w.name||'').toLowerCase().includes(search)));
-
   document.getElementById('waitCount').textContent = `${waitlist.length} jogo${waitlist.length!==1?'s':''} na fila`;
 
-  const totalWaitH = waitlist.reduce((s,w) => s + (w.hours||0), 0);
-  const highPri = waitlist.filter(w=>w.priority==='high').length;
-  const catWaitMap = {};
-  waitlist.forEach(w => {
-    const c = w.category || 'Sem categoria';
-    if (!catWaitMap[c]) catWaitMap[c] = { count:0, hours:0 };
-    catWaitMap[c].count++; catWaitMap[c].hours += w.hours || 0;
-  });
+  const totalWaitH = waitlist.reduce((s,w) => s + (w.hours||0), 0); const highPri = waitlist.filter(w=>w.priority==='high').length;
+  const catWaitMap = {}; waitlist.forEach(w => { const c = w.category || 'Sem categoria'; if (!catWaitMap[c]) catWaitMap[c] = { count:0, hours:0 }; catWaitMap[c].count++; catWaitMap[c].hours += w.hours || 0; });
 
   const wStats = document.getElementById('waitStats');
   if (waitlist.length) {
     wStats.innerHTML = `
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1rem;">
-        <div class="stat-card"><div class="label">Total na fila</div><div class="value" style="color:var(--accent2)">${waitlist.length}</div><div class="icon">📋</div></div>
-        <div class="stat-card"><div class="label">Horas estimadas</div><div class="value">${totalWaitH}<span style="font-size:1rem">h</span></div><div class="sub">${(totalWaitH/24).toFixed(1)} dias</div><div class="icon">⏳</div></div>
-        <div class="stat-card"><div class="label">Alta prioridade</div><div class="value" style="color:var(--red)">${highPri}</div><div class="icon">🔥</div></div>
-        <div class="stat-card"><div class="label">Categorias</div><div class="value" style="color:var(--accent3)">${Object.keys(catWaitMap).length}</div><div class="icon">🗂️</div></div>
-      </div>
-      ${Object.keys(catWaitMap).length > 1 ? `
-      <div class="stats-panel" style="margin-bottom:1rem;">
-        <h3>Horas por categoria (lista de espera)</h3>
-        ${Object.entries(catWaitMap).sort((a,b)=>b[1].hours-a[1].hours).map(([c,d]) => {
-          const max = Math.max(...Object.values(catWaitMap).map(x=>x.hours), 1);
-          return `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${(d.hours/max)*100}%;background:linear-gradient(90deg,var(--accent2),var(--accent3))"></div></div><div class="bar-val">${d.hours}h</div></div>`;
-        }).join('')}
-      </div>` : ''}
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1rem;"><div class="stat-card"><div class="label">Total na fila</div><div class="value" style="color:var(--accent2)">${waitlist.length}</div><div class="icon">📋</div></div><div class="stat-card"><div class="label">Horas estimadas</div><div class="value">${totalWaitH}<span style="font-size:1rem">h</span></div><div class="sub">${(totalWaitH/24).toFixed(1)} dias</div><div class="icon">⏳</div></div><div class="stat-card"><div class="label">Alta prioridade</div><div class="value" style="color:var(--red)">${highPri}</div><div class="icon">🔥</div></div><div class="stat-card"><div class="label">Categorias</div><div class="value" style="color:var(--accent3)">${Object.keys(catWaitMap).length}</div><div class="icon">🗂️</div></div></div>
+      ${Object.keys(catWaitMap).length > 1 ? `<div class="stats-panel" style="margin-bottom:1rem;"><h3>Horas por categoria (espera)</h3>${Object.entries(catWaitMap).sort((a,b)=>b[1].hours-a[1].hours).map(([c,d]) => { const max = Math.max(...Object.values(catWaitMap).map(x=>x.hours), 1); return `<div class="cat-bar-item"><div class="cat-name">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${(d.hours/max)*100}%;background:linear-gradient(90deg,var(--accent2),var(--accent3))"></div></div><div class="bar-val">${d.hours}h</div></div>`; }).join('')}</div>` : ''}
     `;
   } else { wStats.innerHTML = ''; }
 
   const grid = document.getElementById('waitGrid');
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">📋</div><div class="es-title">Lista vazia</div><div class="es-sub">Adicione jogos que você quer jogar em breve</div></div>';
-    return;
-  }
+  if (!list.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">📋</div><div class="es-title">Lista vazia</div><div class="es-sub">Adicione jogos que você quer jogar em breve</div></div>'; return; }
 
-  const priOrder = { high:0, med:1, low:2 };
-  list.sort((a,b) => priOrder[a.priority] - priOrder[b.priority]);
-
+  const priOrder = { high:0, med:1, low:2 }; list.sort((a,b) => priOrder[a.priority] - priOrder[b.priority]);
   grid.innerHTML = list.map(w => {
-    const priLabel = { high:'Alta 🔥', med:'Média', low:'Baixa' }[w.priority];
-    const priClass = { high:'pri-high', med:'pri-med', low:'pri-low' }[w.priority];
-    return `
-    <div class="wait-card">
-      <div class="wc-cover">${w.cover ? `<img src="${w.cover}" alt="">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--bg4)">🎮</div>`}<span class="wc-priority ${priClass}">${priLabel}</span></div>
-      <div class="wc-body">
-        <div class="wc-title">${w.name}</div>
-        <div class="wc-meta"><span>${w.category || '—'}</span><span>~${w.hours || '?'}h</span></div>
-        ${w.note ? `<div style="font-size:0.75rem;color:var(--text3);margin-top:0.4rem;font-style:italic;">${w.note}</div>` : ''}
-        <div class="wc-actions"><button class="btn-sm btn-sm-play" onclick="moveToPlayed('${w.id}')">▶ Jogar agora</button><button class="btn-sm btn-sm-del" onclick="openAddWaitModal('${w.id}')">✏ Editar</button><button class="btn-sm btn-sm-del" onclick="deleteWaitDirect('${w.id}')">✕</button></div>
-      </div>
-    </div>`;
+    const priLabel = { high:'Alta 🔥', med:'Média', low:'Baixa' }[w.priority]; const priClass = { high:'pri-high', med:'pri-med', low:'pri-low' }[w.priority];
+    return `<div class="wait-card"><div class="wc-cover">${w.cover ? `<img src="${w.cover}" alt="">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--bg4)">🎮</div>`}<span class="wc-priority ${priClass}">${priLabel}</span></div><div class="wc-body"><div class="wc-title">${w.name}</div><div class="wc-meta"><span>${w.category || '—'}</span><span>~${w.hours || '?'}h</span></div>${w.note ? `<div style="font-size:0.75rem;color:var(--text3);margin-top:0.4rem;font-style:italic;">${w.note}</div>` : ''}<div class="wc-actions"><button class="btn-sm btn-sm-play" onclick="moveToPlayed('${w.id}')">▶ Jogar agora</button><button class="btn-sm btn-sm-del" onclick="openAddWaitModal('${w.id}')">✏ Editar</button><button class="btn-sm btn-sm-del" onclick="deleteWaitDirect('${w.id}')">✕</button></div></div></div>`;
   }).join('');
 }
 
-function deleteWaitDirect(id) {
-  const w = waitlist.find(x => x.id === id);
-  if (!w) return;
-  if (!confirm(`Remover "${w.name}"?`)) return;
-  waitlist = waitlist.filter(x => x.id !== id);
-  save(); toast('Removido da lista.', 'info'); renderWaitlist();
-}
+function deleteWaitDirect(id) { const w = waitlist.find(x => x.id === id); if (!w || !confirm(`Remover "${w.name}"?`)) return; waitlist = waitlist.filter(x => x.id !== id); save(); toast('Removido da lista.', 'info'); renderWaitlist(); }
 
 // =================== DETAIL MODAL ===================
 function showDetail(id) {
-  const g = games.find(x => x.id === id);
-  if (!g) return;
+  const g = games.find(x => x.id === id); if (!g) return;
   const color = completionColor(g.completion);
 
   let compHtml = '';
   if (g.hours > 0 && g.communityTime > 0) {
     let pct = ((g.hours - g.communityTime) / g.communityTime) * 100;
-    if (pct > 15) {
-      compHtml = `<div style="color:var(--red); font-size:0.8rem; margin-top:4px;">🐢 Você foi ${pct.toFixed(0)}% mais demorado</div>`;
-    } else if (pct < -15) {
-      compHtml = `<div style="color:var(--green); font-size:0.8rem; margin-top:4px;">⚡ Você foi ${Math.abs(pct).toFixed(0)}% mais rápido</div>`;
-    } else {
-      compHtml = `<div style="color:var(--text3); font-size:0.8rem; margin-top:4px;">⚖️ Progresso na média exata</div>`;
-    }
+    if (pct > 15) compHtml = `<div style="color:var(--red); font-size:0.8rem; margin-top:4px;">🐢 Você demorou ${pct.toFixed(0)}% a mais</div>`;
+    else if (pct < -15) compHtml = `<div style="color:var(--green); font-size:0.8rem; margin-top:4px;">⚡ Você foi ${Math.abs(pct).toFixed(0)}% mais rápido</div>`;
+    else compHtml = `<div style="color:var(--text3); font-size:0.8rem; margin-top:4px;">⚖️ Progresso na média exata</div>`;
+  }
+
+  // Novo sistema de comparativo de Nota
+  let ratingCompareHtml = '';
+  if (g.score > 0 && g.rawgRating > 0) {
+    const diff = (g.score - g.rawgRating).toFixed(1);
+    if (diff > 0) ratingCompareHtml = `<div style="color:var(--green); font-size:0.8rem; margin-top:4px;">📈 Você avaliou +${diff} acima</div>`;
+    else if (diff < 0) ratingCompareHtml = `<div style="color:var(--red); font-size:0.8rem; margin-top:4px;">📉 Você avaliou ${Math.abs(diff)} abaixo</div>`;
+    else ratingCompareHtml = `<div style="color:var(--text3); font-size:0.8rem; margin-top:4px;">🤝 Mesma nota da RAWG</div>`;
   }
 
   document.getElementById('detailBody').innerHTML = `
@@ -1384,21 +1010,24 @@ function showDetail(id) {
     <div class="detail-grid">
       <div class="detail-item"><div class="di-label">Categoria</div><div class="di-val">${g.category || '—'}</div></div>
       <div class="detail-item"><div class="di-label">Status</div><div class="di-val">${{completed:'✅ Concluído',playing:'🎮 Jogando',dropped:'❌ Abandonado'}[g.status]||'—'}</div></div>
-      <div class="detail-item">
-        <div class="di-label">Suas Horas</div>
-        <div class="di-val" style="color:var(--accent)">${g.hours || 0}h</div>
-        ${compHtml}
+      <div class="detail-item"><div class="di-label">Suas Horas</div><div class="di-val" style="color:var(--accent)">${g.hours || 0}h</div>${compHtml}</div>
+      <div class="detail-item"><div class="di-label">Média da Comunidade</div><div class="di-val" style="color:var(--text2)">${g.communityTime ? g.communityTime + 'h' : 'Sem dados'}</div></div>
+    </div>
+    
+    <div style="background:var(--bg3); padding:1rem; border-radius:8px; border:1px solid var(--border); margin-bottom:1rem; display:flex; gap:2rem; align-items:center;">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Sua Nota</div>
+        ${starsHtml(g.score)}
+        ${g.score ? `<span style="font-family:var(--font-head);font-size:1.5rem;color:var(--gold); display:block; margin-top:4px;">${g.score.toFixed(1)}/10</span>` : ''}
       </div>
-      <div class="detail-item">
-        <div class="di-label">Média da Comunidade</div>
-        <div class="di-val" style="color:var(--text2)">${g.communityTime ? g.communityTime + 'h' : 'Sem dados'}</div>
+      <div style="width:1px; background:var(--border); height:50px;"></div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Nota RAWG</div>
+        <div style="font-family:var(--font-head);font-size:1.5rem;color:var(--text2);">${g.rawgRating ? g.rawgRating.toFixed(1) + '/10' : '—'}</div>
+        ${ratingCompareHtml}
       </div>
     </div>
-    <div style="margin-bottom:1rem;">
-      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Nota</div>
-      ${starsHtml(g.score)}
-      ${g.score ? `<span style="font-family:var(--font-head);font-size:1.5rem;color:var(--gold);margin-left:0.5rem;">${g.score}/10</span>` : ''}
-    </div>
+
     <div style="margin-bottom:1rem;">
       <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;">Conclusão</span><span style="font-family:var(--font-mono);font-size:0.8rem;color:${color};font-weight:600">${g.completion || 0}%</span></div>
       <div class="completion-bar-bg" style="height:8px"><div class="completion-bar" style="width:${g.completion||0}%;background:${color};height:8px"></div></div>
@@ -1411,51 +1040,19 @@ function showDetail(id) {
 
 // =================== CATEGORY FILTERS ===================
 function updateCatFilters() {
-  const cats = [...new Set(games.map(g => g.category).filter(Boolean))].sort();
-  const waitCats = [...new Set(waitlist.map(w => w.category).filter(Boolean))].sort();
-  ['filterCat', 'rankFilter'].forEach(id => {
-    const sel = document.getElementById(id);
-    if (!sel) return;
-    const val = sel.value;
-    sel.innerHTML = `<option value="">Todas as categorias</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join('');
-    sel.value = val;
-  });
-  const wc = document.getElementById('waitCatFilter');
-  if (wc) wc.innerHTML = `<option value="">Todas as categorias</option>` + waitCats.map(c => `<option value="${c}">${c}</option>`).join('');
+  const cats = [...new Set(games.map(g => g.category).filter(Boolean))].sort(); const waitCats = [...new Set(waitlist.map(w => w.category).filter(Boolean))].sort();
+  ['filterCat', 'rankFilter'].forEach(id => { const sel = document.getElementById(id); if (!sel) return; const val = sel.value; sel.innerHTML = `<option value="">Todas as categorias</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join(''); sel.value = val; });
+  const wc = document.getElementById('waitCatFilter'); if (wc) wc.innerHTML = `<option value="">Todas as categorias</option>` + waitCats.map(c => `<option value="${c}">${c}</option>`).join('');
 }
 
-// =================== TOAST ===================
 function toast(msg, type = 'info') {
-  const icons = { success:'✓', error:'✕', info:'ℹ' };
-  const t = document.createElement('div');
-  t.className = `toast ${type}`; t.innerHTML = `<span>${icons[type]}</span> ${msg}`;
-  document.getElementById('toastContainer').appendChild(t);
-  setTimeout(() => t.remove(), 3500);
+  const icons = { success:'✓', error:'✕', info:'ℹ' }; const t = document.createElement('div'); t.className = `toast ${type}`; t.innerHTML = `<span>${icons[type]}</span> ${msg}`; document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 3500);
 }
 
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(m => {
-  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
-});
+document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }); });
 
-// =================== INIT ===================
 function init() {
-  buildStars(document.getElementById('starInput'), 0);
-  updateCatFilters();
-  renderDashboard();
-
-  if (!games.length && !localStorage.getItem('gbx_seeded')) {
-    localStorage.setItem('gbx_seeded', '1');
-    games = [
-      { id:'1', name:'Elden Ring', category:'RPG', hours:120, communityTime:133, completion:80, status:'completed', platform:'PC', score:10, review:'Uma obra-prima absoluta.', cover:'https://media.rawg.io/media/games/5ec/5ecac5cb026ec26a56efdf5ac6ad2d4f.jpg', date: new Date(Date.now()-5*86400000).toISOString() },
-      { id:'2', name:'Hollow Knight', category:'Platformer', hours:45, communityTime:40, completion:100, status:'completed', platform:'PC', score:9, review:'Perfeito em tudo.', cover:'https://media.rawg.io/media/games/4cf/4cfc6b7f185077b995d0c049c912be04.jpg', date: new Date(Date.now()-10*86400000).toISOString() },
-    ];
-    waitlist = [
-      { id:'w1', name:'Baldur\'s Gate 3', category:'RPG', hours:100, priority:'high', note:'Jogar urgente!', cover:'https://media.rawg.io/media/games/740/7406830508a8a65bb7424c5383a886a4.jpg', date: new Date().toISOString() },
-    ];
-    addActivity('🎮', 'Adicionou <strong>Elden Ring</strong>');
-    save(); updateCatFilters(); renderDashboard();
-  }
+  updateStarDisplay(0); updateCatFilters(); renderDashboard();
 }
 
 init();
