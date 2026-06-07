@@ -225,6 +225,11 @@
   .badge-playing { background: rgba(0,212,255,0.15); color: var(--accent); border:1px solid rgba(0,212,255,0.3); }
   .badge-dropped { background: rgba(239,68,68,0.15); color: var(--red); border:1px solid rgba(239,68,68,0.3); }
 
+  .progress-tag {
+    font-family: var(--font-mono); font-size: 0.6rem; margin-left: 0.5rem;
+    padding: 2px 5px; border-radius: 3px; background: var(--bg3);
+  }
+
   /* ===== MODAL & FORMS ===== */
   .modal-overlay {
     display:none; position:fixed; inset:0; background: rgba(0,0,0,0.8);
@@ -392,7 +397,6 @@
 
 <div class="page active" id="page-dashboard">
   <div class="dash-hero" id="dashStats"></div>
-  
   <div class="dash-hero" id="dashHighlights" style="grid-template-columns: 1fr 1fr; margin-top:-1rem;"></div>
 
   <div class="dash-grid">
@@ -515,18 +519,18 @@
         </div>
         <div class="form-col">
           <label>Categoria / Gênero</label>
-          <input type="text" id="gCat" placeholder="Ex: RPG, FPS, Plataforma...">
+          <input type="text" id="gCat" placeholder="Ex: RPG, FPS...">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-col">
-          <label>Horas Jogadas</label>
+          <label>Suas Horas Jogadas</label>
           <input type="number" id="gHours" placeholder="0" min="0">
         </div>
         <div class="form-col">
-          <label>% de Conclusão</label>
-          <input type="number" id="gCompletion" placeholder="0" min="0" max="100">
+          <label>Média da Comunidade (h)</label>
+          <input type="number" id="gCommTime" placeholder="Preenchido via RAWG" min="0">
         </div>
       </div>
 
@@ -539,6 +543,13 @@
             <option value="dropped">Abandonado</option>
           </select>
         </div>
+        <div class="form-col">
+          <label>% de Conclusão</label>
+          <input type="number" id="gCompletion" placeholder="0" min="0" max="100">
+        </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-col">
           <label>Plataforma</label>
           <input type="text" id="gPlatform" placeholder="Steam, PS5, Xbox...">
@@ -639,12 +650,17 @@
 
 <script>
 // =================== CONFIGURATION ===================
-const RAWG_API_KEY = 'SUA_CHAVE_RAWG_AQUI'; // <--- ADICIONE SUA CHAVE DO RAWG.IO AQUI
+const RAWG_API_KEY = '1c31f06824454cfabb9950ed627257f5';
 
 // =================== DATA ===================
-let games = JSON.parse(localStorage.getItem('gbx_games') || '[]');
-let waitlist = JSON.parse(localStorage.getItem('gbx_wait') || '[]');
-let activity = JSON.parse(localStorage.getItem('gbx_activity') || '[]');
+let games = [];
+let waitlist = [];
+let activity = [];
+
+try { games = JSON.parse(localStorage.getItem('gbx_games') || '[]'); } catch(e) {}
+try { waitlist = JSON.parse(localStorage.getItem('gbx_wait') || '[]'); } catch(e) {}
+try { activity = JSON.parse(localStorage.getItem('gbx_activity') || '[]'); } catch(e) {}
+
 let currentRating = 0;
 let searchTimer = null;
 let wSearchTimer = null;
@@ -714,11 +730,6 @@ function highlight(container, val) {
 async function searchRAWG(query, resultEl, statusEl, fillFn) {
   if (!query || query.length < 2) { resultEl.innerHTML = ''; statusEl.innerHTML = ''; return; }
   
-  if (!RAWG_API_KEY || RAWG_API_KEY === 'SUA_CHAVE_RAWG_AQUI') {
-    statusEl.innerHTML = '<div style="color:var(--red);font-size:0.8rem;padding:0.5rem 0;">Erro: Você precisa inserir sua API Key da RAWG no código fonte (Linha 469).</div>';
-    return;
-  }
-
   statusEl.innerHTML = '<div class="searching-indicator"><div class="spinner"></div> Buscando na base RAWG...</div>';
   resultEl.innerHTML = '';
 
@@ -746,6 +757,7 @@ async function searchRAWG(query, resultEl, statusEl, fillFn) {
           <div class="sr-title">${item.name}</div>
           <div class="sr-meta">
             ${item.rating ? `Nota RAWG: <strong style="color:var(--green)">${item.rating}</strong>/5` : 'Sem nota'}
+            ${item.playtime ? ` · Média: ${item.playtime}h` : ''}
             ${platforms ? `<br>${platforms}` : ''}
           </div>
           <div class="sr-tags">${genres.split(', ').filter(Boolean).slice(0,3).map(t => `<span class="tag">${t}</span>`).join('')}</div>
@@ -779,10 +791,11 @@ function debounceWaitSearch() {
 
 function fillGameFromRAWG(item) {
   document.getElementById('gName').value = item.name;
-  document.getElementById('gSteamId').value = item.id; // Reusing internal variable
+  document.getElementById('gSteamId').value = item.id;
   document.getElementById('gCover').value = item.background_image || '';
   document.getElementById('gCat').value = item.genres ? item.genres.map(g => g.name).join(', ') : '';
   document.getElementById('gPlatform').value = item.platforms ? item.platforms.map(p => p.platform.name).slice(0,2).join(', ') : '';
+  document.getElementById('gCommTime').value = item.playtime || '';
 
   document.getElementById('steamResult').innerHTML = `<div style="font-size:0.75rem;color:var(--green);padding:0.3rem 0;">✓ ${item.name} selecionado!</div>`;
   document.getElementById('steamSearch').value = '';
@@ -803,7 +816,7 @@ function fillWaitFromRAWG(item) {
   toast('Dados da RAWG carregados!', 'success');
 }
 
-// =================== COMPLETION BAR COLOR ===================
+// =================== HELPERS ===================
 function completionColor(pct) {
   if (pct >= 100) return '#ffd700';
   if (pct >= 75) return '#22c55e';
@@ -812,7 +825,6 @@ function completionColor(pct) {
   return '#ef4444';
 }
 
-// =================== STARS DISPLAY ===================
 function starsHtml(score) {
   if (!score) return '<span style="color:var(--text3);font-size:0.75rem;">Sem nota</span>';
   let html = '<div class="stars-display">';
@@ -824,6 +836,11 @@ function starsHtml(score) {
   return html;
 }
 
+function getSafeDate(dateStr) {
+  const d = new Date(dateStr);
+  return isNaN(d.getTime()) ? 0 : d.getTime();
+}
+
 // =================== MODAL CONTROL ===================
 function openAddModal(gameId) {
   resetAddForm();
@@ -832,9 +849,10 @@ function openAddModal(gameId) {
     if (!g) return;
     document.getElementById('addModalTitle').textContent = 'Editar Jogo';
     document.getElementById('gEditId').value = g.id;
-    document.getElementById('gName').value = g.name;
+    document.getElementById('gName').value = g.name || '';
     document.getElementById('gCat').value = g.category || '';
     document.getElementById('gHours').value = g.hours || '';
+    document.getElementById('gCommTime').value = g.communityTime || '';
     document.getElementById('gCompletion').value = g.completion || '';
     document.getElementById('gStatus').value = g.status || 'completed';
     document.getElementById('gPlatform').value = g.platform || '';
@@ -859,7 +877,7 @@ function openAddWaitModal(wId) {
     if (!w) return;
     document.getElementById('waitModalTitle').textContent = 'Editar Lista de Espera';
     document.getElementById('wEditId').value = w.id;
-    document.getElementById('wName').value = w.name;
+    document.getElementById('wName').value = w.name || '';
     document.getElementById('wCat').value = w.category || '';
     document.getElementById('wHours').value = w.hours || '';
     document.getElementById('wPriority').value = w.priority || 'med';
@@ -876,7 +894,7 @@ function openAddWaitModal(wId) {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function resetAddForm() {
-  ['gName','gCat','gHours','gCompletion','gPlatform','gReview','gCover','gSteamId','gEditId','steamSearch'].forEach(i => {
+  ['gName','gCat','gHours','gCommTime','gCompletion','gPlatform','gReview','gCover','gSteamId','gEditId','steamSearch'].forEach(i => {
     const el = document.getElementById(i);
     if (el) el.value = '';
   });
@@ -907,6 +925,7 @@ function saveGame() {
     name,
     category: document.getElementById('gCat').value.trim(),
     hours: parseFloat(document.getElementById('gHours').value) || 0,
+    communityTime: parseFloat(document.getElementById('gCommTime').value) || 0,
     completion: parseFloat(document.getElementById('gCompletion').value) || 0,
     status: document.getElementById('gStatus').value,
     platform: document.getElementById('gPlatform').value.trim(),
@@ -1011,9 +1030,8 @@ function moveToPlayed(wId) {
 // =================== RENDER DASHBOARD ===================
 function renderDashboard() {
   const totalHours = games.reduce((s, g) => s + (g.hours || 0), 0);
-  const avgScore = games.filter(g => g.score > 0).length
-    ? (games.filter(g => g.score > 0).reduce((s, g) => s + g.score, 0) / games.filter(g => g.score > 0).length).toFixed(1)
-    : '—';
+  const gamesWithScore = games.filter(g => g.score > 0);
+  const avgScore = gamesWithScore.length ? (gamesWithScore.reduce((s, g) => s + g.score, 0) / gamesWithScore.length).toFixed(1) : '—';
   const completed = games.filter(g => g.status === 'completed').length;
   const waitHours = waitlist.reduce((s, w) => s + (w.hours || 0), 0);
 
@@ -1044,7 +1062,6 @@ function renderDashboard() {
     </div>
   `;
 
-  // Cálculos dinâmicos para a seção de Destaques
   const catMap = {};
   games.forEach(g => {
     const c = g.category || 'Sem categoria';
@@ -1080,8 +1097,8 @@ function renderDashboard() {
     </div>
   `;
 
-  // Recent games (Ordenados estritamente pela data de adição/modificação)
-  const recent = [...games].sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
+  // Safely sort by date (avoiding NaN if date is missing in old saves)
+  const recent = [...games].sort((a,b) => getSafeDate(b.date) - getSafeDate(a.date)).slice(0, 6);
   const rg = document.getElementById('dashRecentGames');
   if (!recent.length) {
     rg.innerHTML = '<div class="empty-state"><div class="es-icon">🎮</div><div class="es-title">Nenhum jogo ainda</div><div class="es-sub">Clique em "+ Adicionar Jogo" para começar</div></div>';
@@ -1089,7 +1106,6 @@ function renderDashboard() {
     rg.innerHTML = recent.map(g => gameCardHtml(g)).join('');
   }
 
-  // Activity
   const act = document.getElementById('dashActivity');
   if (!activity.length) {
     act.innerHTML = '<div style="color:var(--text3);font-size:0.8rem;padding:1rem 0;">Nenhuma atividade ainda.</div>';
@@ -1102,6 +1118,7 @@ function renderDashboard() {
 }
 
 function timeAgo(date) {
+  if(isNaN(date.getTime())) return '';
   const secs = Math.floor((Date.now() - date.getTime()) / 1000);
   if (secs < 60) return 'agora';
   if (secs < 3600) return `${Math.floor(secs/60)}m`;
@@ -1114,6 +1131,15 @@ function gameCardHtml(g) {
   const statusLabel = {completed:'Concluído', playing:'Jogando', dropped:'Abandonado'}[g.status] || '';
   const statusClass = {completed:'badge-completed', playing:'badge-playing', dropped:'badge-dropped'}[g.status] || '';
   const color = completionColor(g.completion);
+  
+  let speedHtml = '';
+  if (g.hours > 0 && g.communityTime > 0) {
+    let pct = ((g.hours - g.communityTime) / g.communityTime) * 100;
+    if (pct > 15) speedHtml = `<span class="progress-tag" style="color:var(--red)" title="${pct.toFixed(0)}% mais demorado">🐢 ${Math.abs(pct).toFixed(0)}%</span>`;
+    else if (pct < -15) speedHtml = `<span class="progress-tag" style="color:var(--green)" title="${Math.abs(pct).toFixed(0)}% mais rápido">⚡ ${Math.abs(pct).toFixed(0)}%</span>`;
+    else speedHtml = `<span class="progress-tag" style="color:var(--text3)" title="Na média">⚖️ Média</span>`;
+  }
+
   return `
   <div class="game-card" onclick="showDetail('${g.id}')">
     <div class="cover">
@@ -1126,7 +1152,9 @@ function gameCardHtml(g) {
       <div class="title" title="${g.name}">${g.name}</div>
       <div class="meta">
         <span>${g.category || '—'}</span>
-        <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text3)">${g.hours || 0}h</span>
+        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text3); display:flex; align-items:center;">
+          ${g.hours || 0}h ${speedHtml}
+        </span>
       </div>
       ${starsHtml(g.score)}
       <div class="completion-bar-wrap">
@@ -1140,7 +1168,6 @@ function gameCardHtml(g) {
 }
 
 // =================== RENDER GAMES / RANKING / STATS / WAITLIST ===================
-// (Restante das funções UI originais, mantidas exatamente como estavam)
 function renderGames() {
   const status = document.getElementById('filterStatus').value;
   const cat = document.getElementById('filterCat').value;
@@ -1150,14 +1177,14 @@ function renderGames() {
   let list = games.filter(g =>
     (!status || g.status === status) &&
     (!cat || g.category === cat) &&
-    (!search || g.name.toLowerCase().includes(search))
+    (!(search) || (g.name || '').toLowerCase().includes(search))
   );
 
   if (sort === 'score') list.sort((a,b) => (b.score||0)-(a.score||0));
   else if (sort === 'hours') list.sort((a,b) => (b.hours||0)-(a.hours||0));
   else if (sort === 'completion') list.sort((a,b) => (b.completion||0)-(a.completion||0));
-  else if (sort === 'name') list.sort((a,b) => a.name.localeCompare(b.name));
-  else list.sort((a,b) => new Date(b.date)-new Date(a.date));
+  else if (sort === 'name') list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+  else list.sort((a,b) => getSafeDate(b.date) - getSafeDate(a.date));
 
   document.getElementById('gamesCount').textContent = `${list.length} jogo${list.length!==1?'s':''} encontrado${list.length!==1?'s':''}`;
   const grid = document.getElementById('gamesGrid');
@@ -1171,7 +1198,7 @@ function renderGames() {
 function renderRanking() {
   const catFilter = document.getElementById('rankFilter').value;
   let list = games.filter(g => g.score > 0 && (!catFilter || g.category === catFilter));
-  list.sort((a,b) => b.score - a.score || b.hours - a.hours);
+  list.sort((a,b) => b.score - a.score || (b.hours||0) - (a.hours||0));
 
   const el = document.getElementById('rankList');
   if (!list.length) {
@@ -1268,7 +1295,7 @@ function renderWaitlist() {
   const cat = document.getElementById('waitCatFilter').value;
   const search = document.getElementById('waitSearch').value.toLowerCase();
 
-  let list = waitlist.filter(w => (!pri || w.priority === pri) && (!cat || w.category === cat) && (!search || w.name.toLowerCase().includes(search)));
+  let list = waitlist.filter(w => (!pri || w.priority === pri) && (!cat || w.category === cat) && (!(search) || (w.name||'').toLowerCase().includes(search)));
 
   document.getElementById('waitCount').textContent = `${waitlist.length} jogo${waitlist.length!==1?'s':''} na fila`;
 
@@ -1340,13 +1367,32 @@ function showDetail(id) {
   if (!g) return;
   const color = completionColor(g.completion);
 
+  let compHtml = '';
+  if (g.hours > 0 && g.communityTime > 0) {
+    let pct = ((g.hours - g.communityTime) / g.communityTime) * 100;
+    if (pct > 15) {
+      compHtml = `<div style="color:var(--red); font-size:0.8rem; margin-top:4px;">🐢 Você foi ${pct.toFixed(0)}% mais demorado</div>`;
+    } else if (pct < -15) {
+      compHtml = `<div style="color:var(--green); font-size:0.8rem; margin-top:4px;">⚡ Você foi ${Math.abs(pct).toFixed(0)}% mais rápido</div>`;
+    } else {
+      compHtml = `<div style="color:var(--text3); font-size:0.8rem; margin-top:4px;">⚖️ Progresso na média exata</div>`;
+    }
+  }
+
   document.getElementById('detailBody').innerHTML = `
     <div class="detail-cover">${g.cover ? `<img src="${g.cover}" alt="${g.name}">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;background:var(--bg4)">🎮</div>`}<div class="dc-title">${g.name}</div></div>
     <div class="detail-grid">
       <div class="detail-item"><div class="di-label">Categoria</div><div class="di-val">${g.category || '—'}</div></div>
-      <div class="detail-item"><div class="di-label">Plataforma</div><div class="di-val">${g.platform || '—'}</div></div>
-      <div class="detail-item"><div class="di-label">Horas Jogadas</div><div class="di-val" style="color:var(--accent)">${g.hours || 0}h</div></div>
       <div class="detail-item"><div class="di-label">Status</div><div class="di-val">${{completed:'✅ Concluído',playing:'🎮 Jogando',dropped:'❌ Abandonado'}[g.status]||'—'}</div></div>
+      <div class="detail-item">
+        <div class="di-label">Suas Horas</div>
+        <div class="di-val" style="color:var(--accent)">${g.hours || 0}h</div>
+        ${compHtml}
+      </div>
+      <div class="detail-item">
+        <div class="di-label">Média da Comunidade</div>
+        <div class="di-val" style="color:var(--text2)">${g.communityTime ? g.communityTime + 'h' : 'Sem dados'}</div>
+      </div>
     </div>
     <div style="margin-bottom:1rem;">
       <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Nota</div>
@@ -1401,8 +1447,8 @@ function init() {
   if (!games.length && !localStorage.getItem('gbx_seeded')) {
     localStorage.setItem('gbx_seeded', '1');
     games = [
-      { id:'1', name:'Elden Ring', category:'RPG', hours:120, completion:80, status:'completed', platform:'PC', score:10, review:'Uma obra-prima absoluta.', cover:'https://media.rawg.io/media/games/5ec/5ecac5cb026ec26a56efdf5ac6ad2d4f.jpg', date: new Date(Date.now()-5*86400000).toISOString() },
-      { id:'2', name:'Hollow Knight', category:'Platformer', hours:45, completion:100, status:'completed', platform:'PC', score:9, review:'Perfeito em tudo.', cover:'https://media.rawg.io/media/games/4cf/4cfc6b7f185077b995d0c049c912be04.jpg', date: new Date(Date.now()-10*86400000).toISOString() },
+      { id:'1', name:'Elden Ring', category:'RPG', hours:120, communityTime:133, completion:80, status:'completed', platform:'PC', score:10, review:'Uma obra-prima absoluta.', cover:'https://media.rawg.io/media/games/5ec/5ecac5cb026ec26a56efdf5ac6ad2d4f.jpg', date: new Date(Date.now()-5*86400000).toISOString() },
+      { id:'2', name:'Hollow Knight', category:'Platformer', hours:45, communityTime:40, completion:100, status:'completed', platform:'PC', score:9, review:'Perfeito em tudo.', cover:'https://media.rawg.io/media/games/4cf/4cfc6b7f185077b995d0c049c912be04.jpg', date: new Date(Date.now()-10*86400000).toISOString() },
     ];
     waitlist = [
       { id:'w1', name:'Baldur\'s Gate 3', category:'RPG', hours:100, priority:'high', note:'Jogar urgente!', cover:'https://media.rawg.io/media/games/740/7406830508a8a65bb7424c5383a886a4.jpg', date: new Date().toISOString() },
